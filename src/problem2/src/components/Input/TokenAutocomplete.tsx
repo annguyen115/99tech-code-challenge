@@ -6,16 +6,27 @@ export type TokenAutocompleteProps = {
   label: string;
   name: string;
   options: TokenOptions[];
+  value: string;
   className?: string;
+  errorMessage?: string;
+  onValueChange? : (value: string) => void;
+  onBlur?:(event: any) => void;
 }
 
-export const TokenAutocomplete: React.FC<TokenAutocompleteProps> = ({ name, label, options, className }) => {
+export const TokenAutocomplete: React.FC<TokenAutocompleteProps> = ({ value, onValueChange, onBlur, label, options, className, errorMessage }) => {
+  const onChangedHandle = (_: any, inputValue: string | null) => {
+    const tokenCode = options.find(option => option.name === inputValue)
+    tokenCode && onValueChange && onValueChange(tokenCode.code);
+  }
+
   return (
     <Autocomplete
       id='token-autocomplete'
       sx={{ width: 300 }}
       options={options}
       autoHighlight
+      value={options.find(option => option.code === value)}
+      onInputChange={onChangedHandle}
       getOptionLabel={(option) => option.name}
       className={className}
       renderOption={(props, option) => {
@@ -42,6 +53,9 @@ export const TokenAutocomplete: React.FC<TokenAutocompleteProps> = ({ name, labe
         <TextField
           {...params}
           label={label}
+          error={Boolean(errorMessage)}
+          helperText={errorMessage}
+          onBlur={onBlur}
           slotProps={{
             htmlInput: {
               ...params.inputProps,

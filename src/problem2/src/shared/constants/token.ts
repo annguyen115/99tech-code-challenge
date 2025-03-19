@@ -35,3 +35,37 @@ export const TokenNameMapping: Record<NonNullable<TokenCode>, string> = {
   [TokenCode.ZIL]: 'Zilliqa'
 }
 
+export const TokenRateMapping: Record<string, number> = {
+  [TokenCode.BLUR]: 0.20811525423728813,
+  [TokenCode.bNEO]: 7.1282679,
+  [TokenCode.BUSD]: 1,
+  [TokenCode.USD]: 1,
+  [TokenCode.ETH]: 1645.9337373737374,
+  [TokenCode.GMX]: 36.345114372881355,
+  [TokenCode.STEVMOS]: 0.07276706779661017,
+  [TokenCode.LUNA]: 0.40955638983050846,
+  [TokenCode.RATOM]: 10.250918915254237,
+  [TokenCode.STRD]: 0.7386553389830508,
+  [TokenCode.EVMOS]: 0.06246181355932203,
+  [TokenCode.IBCX]: 41.26811355932203,
+  [TokenCode.IRIS]: 0.0177095593220339,
+  [TokenCode.ampLUNA]: 0.49548589830508477,
+  [TokenCode.KUJI]: 0.675,
+  [TokenCode.STOSMO]: 0.431318,
+  [TokenCode.axlUSDC]: 0.989832,
+  [TokenCode.ATOM]: 7.186657333333334,
+  [TokenCode.STATOM]: 8.512162050847458,
+  [TokenCode.OSMO]: 0.3772974333333333,
+  [TokenCode.rSWTH]:0.00408771,
+  [TokenCode.STLUNA]: 0.44232210169491526,
+  [TokenCode.LSI]: 67.69661525423729,
+  [TokenCode.OKB]: 42.97562059322034,
+  [TokenCode.OKT]: 13.561577966101694,
+  [TokenCode.SWTH]: 0.004039850455012084,
+  [TokenCode.USC]: 0.994,
+  [TokenCode.USDC]: 1,
+  [TokenCode.WBTC]: 26002.82202020202,
+  [TokenCode.wstETH]: 1872.2579742372882,
+  [TokenCode.YieldUSD]: 1.0290847966101695,
+  [TokenCode.ZIL]: 0.01651813559322034
+}

@@ -11,6 +11,7 @@
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@enums/*": ["shared/enums/*"],
+      "@validations/*": ["shared/validations/*"],
       "@constants/*": ["shared/constants/*"],
       "@common-types/*": ["shared/types/*"],
       "@utils/*": ["shared/utils/*"],
