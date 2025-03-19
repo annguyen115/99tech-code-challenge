@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@enums/*": ["shared/enums/*"],
+      "@validations/*": ["shared/validations/*"],
+      "@constants/*": ["shared/constants/*"],
+      "@common-types/*": ["shared/types/*"],
+      "@utils/*": ["shared/utils/*"],
+    }
+
+  }
+}
