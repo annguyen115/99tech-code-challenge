@@ -1,0 +1,37 @@
+import { TokenCode } from '@enums/token';
+
+export const TokenNameMapping: Record<NonNullable<TokenCode>, string> = {
+  [TokenCode.BLUR]: 'Blur',
+  [TokenCode.bNEO]: 'Baby NEON',
+  [TokenCode.BUSD]: 'BUSD',
+  [TokenCode.USD]: 'USD',
+  [TokenCode.ETH]: 'ETH',
+  [TokenCode.GMX]: 'GMX',
+  [TokenCode.STEVMOS]: 'Stride Staked EVMOS',
+  [TokenCode.LUNA]: 'Terra',
+  [TokenCode.RATOM]: 'StaFi Staked ATOM',
+  [TokenCode.STRD]: 'STRD',
+  [TokenCode.EVMOS]: 'EVMOS',
+  [TokenCode.IBCX]: 'IBC Index',
+  [TokenCode.IRIS]: 'IRISnet',
+  [TokenCode.ampLUNA]: 'AMP Terra',
+  [TokenCode.KUJI]: 'Kujira',
+  [TokenCode.STOSMO]: 'Stride Staked OSMO',
+  [TokenCode.axlUSDC]: 'Axelar Wrapped USDC',
+  [TokenCode.ATOM]: 'Cosmos',
+  [TokenCode.STATOM]: 'Stride Staked ATOM',
+  [TokenCode.OSMO]: 'Osmosis',
+  [TokenCode.rSWTH]: 'rSWTH',
+  [TokenCode.STLUNA]: 'Stride Staked LUNA',
+  [TokenCode.LSI]: 'Liquid Staking Inu',
+  [TokenCode.OKB]: 'OKB',
+  [TokenCode.OKT]: 'OKT Chain',
+  [TokenCode.SWTH]: 'Carbon Protocol',
+  [TokenCode.USC]: 'Orby Network',
+  [TokenCode.USDC]: 'USDC',
+  [TokenCode.WBTC]: 'Wrapped Bitcoin',
+  [TokenCode.wstETH]: 'Lido wstETH',
+  [TokenCode.YieldUSD]: 'YieldUSD',
+  [TokenCode.ZIL]: 'Zilliqa'
+}
+

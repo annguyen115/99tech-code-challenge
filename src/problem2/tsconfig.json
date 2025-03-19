@@ -3,5 +3,18 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@enums/*": ["shared/enums/*"],
+      "@constants/*": ["shared/constants/*"],
+      "@common-types/*": ["shared/types/*"],
+      "@utils/*": ["shared/utils/*"],
+    }
+
+  }
 }
