@@ -3,6 +3,7 @@ import { ScoresService } from './scores.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Score } from '@modules/scores/scores.schema';
 import { ScoresRepository } from '@modules/scores/scores.repository';
+import { ScoresController } from './scores.controller';
 
 @Module({
   imports: [
@@ -14,5 +15,6 @@ import { ScoresRepository } from '@modules/scores/scores.repository';
     ]),
   ],
   providers: [ScoresService, ScoresRepository],
+  controllers: [ScoresController],
 })
 export class ScoresModule {}
