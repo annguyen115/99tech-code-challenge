@@ -17,7 +17,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate": "ts-node -r tsconfig-paths/register src/migrateCli.ts",
+    "migrate:init": "npm run migrate init",
+    "migrate:create": "npm run migrate new -- new --name",
+    "migrate:up": "npm run migrate -- up",
+    "migrate:down": "npm run migrate -- down -l",
+    "migrate:reset": "npm run migrate -- down -a"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

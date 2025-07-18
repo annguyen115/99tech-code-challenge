@@ -1,0 +1,18 @@
+port: 3000
+
+mongodb:
+  uri: mongodb://localhost:27017
+  databaseName: score
+  collections:
+    users: users
+    migrations: migrations_changelog
+  migration:
+    path: src/migrations
+    user:
+      amount: 20
+
+auth:
+  salt: 10
+  secret: this-is-my-secret
+  accessTokenExpire: 15m
+  refreshTokenExpire: 7d
