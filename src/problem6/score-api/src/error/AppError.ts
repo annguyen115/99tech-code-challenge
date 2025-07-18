@@ -22,6 +22,24 @@ export class UnauthorizedError extends AppError {
   }
 }
 
+export class TokenInvalidError extends AppError {
+  constructor(message: string) {
+    super(ErrorCode.TOKEN_INVALID, message);
+  }
+}
+
+export class TokenExpiredError extends AppError {
+  constructor(message: string) {
+    super(ErrorCode.TOKEN_EXPIRED, message);
+  }
+}
+
+export class MissingTokenError extends AppError {
+  constructor(message: string) {
+    super(ErrorCode.MISSING_TOKEN, message);
+  }
+}
+
 export class ProhibitedError extends AppError {
   constructor(message: string) {
     super(ErrorCode.FORBIDDEN, message);

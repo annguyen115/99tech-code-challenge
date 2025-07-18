@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { ErrorMessage } from '@error/ErrorCode';
-import { UnauthorizedError } from '@error/AppError';
+import { MissingTokenError } from '@error/AppError';
 import { UserPayload } from '@appTypes/user-payload';
 
 export const User = createParamDecorator(
@@ -10,7 +10,7 @@ export const User = createParamDecorator(
     const user = request.user as UserPayload;
 
     if (!user) {
-      throw new UnauthorizedError(ErrorMessage.MISSING_TOKEN);
+      throw new MissingTokenError(ErrorMessage.MISSING_TOKEN);
     }
 
     return field ? user?.[field] : user;

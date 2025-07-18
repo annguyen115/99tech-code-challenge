@@ -1,10 +1,10 @@
-// libs/auth/auth.guard.ts
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Request } from 'express';
-import { UnauthorizedError } from '@error/AppError';
+import { MissingTokenError } from '@error/AppError';
 import { ErrorMessage } from '@error/ErrorCode';
 import { verifyToken } from '@utils/auth';
 import { UserPayload } from '@appTypes/user-payload';
+import { catchVerifyTokenError } from '@error/ErrorHandler';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     const authHeader = req.headers.authorization;
 
     if (!authHeader?.startsWith('Bearer ')) {
-      throw new UnauthorizedError(ErrorMessage.MISSING_OR_MALFORMED_TOKEN);
+      throw new MissingTokenError(ErrorMessage.MISSING_TOKEN);
     }
 
     const token = authHeader.split(' ')[1];
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } catch (e) {
       console.log(e);
-      throw new UnauthorizedError(ErrorMessage.INVALID_TOKEN);
+      catchVerifyTokenError(e);
     }
   }
 }

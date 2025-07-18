@@ -3,7 +3,7 @@ import { UserRepository } from '@modules/users/user.repository';
 import { LogService } from '@modules/log/log.service';
 import { UserModel } from '@modules/users/users.schema';
 import { isEmpty } from 'lodash';
-import { UnauthorizedError } from '@error/AppError';
+import { TokenInvalidError } from '@error/AppError';
 import { ErrorMessage } from '@error/ErrorCode';
 import {
   comparePassword,
@@ -15,6 +15,7 @@ import { UserPayload } from '@appTypes/user-payload';
 import { appConfig } from '@config';
 import { LoginRequestPayloadDto } from '@modules/auth/dto/login.dto';
 import { RefreshTokenResponsePayloadDto } from '@modules/auth/dto/refresh-token.dto';
+import { catchVerifyTokenError } from '@error/ErrorHandler';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +52,7 @@ export class AuthService {
     const user = await this.userRepository.findByRefreshToken(token);
 
     if (isEmpty(user)) {
-      throw new UnauthorizedError(ErrorMessage.INVALID_TOKEN);
+      throw new TokenInvalidError(ErrorMessage.TOKEN_INVALID);
     }
 
     try {
@@ -61,8 +62,8 @@ export class AuthService {
         appConfig.auth.accessTokenExpire as JwtExpiresIn,
       );
       return { accessToken: newAccessToken } as RefreshTokenResponsePayloadDto;
-    } catch {
-      throw new UnauthorizedError(ErrorMessage.INVALID_TOKEN);
+    } catch (e) {
+      catchVerifyTokenError(e);
     }
   }
 
@@ -73,13 +74,13 @@ export class AuthService {
     const user = await this.userRepository.findByUsername(username);
 
     if (isEmpty(user)) {
-      throw new UnauthorizedError(ErrorMessage.INVALID_CREDENTIALS);
+      throw new TokenInvalidError(ErrorMessage.TOKEN_INVALID);
     }
 
     const passwordsMatch = await comparePassword(password, user.password);
 
     if (!passwordsMatch) {
-      throw new UnauthorizedError(ErrorMessage.INVALID_CREDENTIALS);
+      throw new TokenInvalidError(ErrorMessage.TOKEN_INVALID);
     }
 
     return user.toJSON() as UserModel;

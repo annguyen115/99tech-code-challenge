@@ -2,6 +2,9 @@ export enum ErrorCode {
   INTERNAL = 'INTERNAL_SERVER_ERROR',
   BAD_REQUEST = 'BAD_REQUEST',
   UNAUTHORIZED = 'UNAUTHORIZED',
+  TOKEN_EXPIRED = 'TOKEN_EXPIRED',
+  TOKEN_INVALID = 'TOKEN_INVALID',
+  MISSING_TOKEN = 'MISSING_TOKEN',
   FORBIDDEN = 'FORBIDDEN',
   NOT_FOUND = 'NOT_FOUND',
   CONFLICT = 'CONFLICT',
@@ -29,6 +32,9 @@ export const ErrorHttpStatusMap: Record<
   [ErrorCode.INTERNAL]: HttpStatusCode.INTERNAL_SERVER_ERROR,
   [ErrorCode.BAD_REQUEST]: HttpStatusCode.BAD_REQUEST,
   [ErrorCode.UNAUTHORIZED]: HttpStatusCode.UNAUTHORIZED,
+  [ErrorCode.TOKEN_EXPIRED]: HttpStatusCode.UNAUTHORIZED,
+  [ErrorCode.TOKEN_INVALID]: HttpStatusCode.UNAUTHORIZED,
+  [ErrorCode.MISSING_TOKEN]: HttpStatusCode.UNAUTHORIZED,
   [ErrorCode.FORBIDDEN]: HttpStatusCode.FORBIDDEN,
   [ErrorCode.NOT_FOUND]: HttpStatusCode.NOT_FOUND,
   [ErrorCode.CONFLICT]: HttpStatusCode.CONFLICT,
@@ -38,10 +44,9 @@ export const ErrorHttpStatusMap: Record<
 
 export const ErrorMessage = {
   MISSING_TOKEN: 'Missing token',
-  INVALID_TOKEN: 'Invalid token',
-  INVALID_CREDENTIALS: 'Invalid credentials',
+  TOKEN_EXPIRED: 'Token expired',
+  TOKEN_INVALID: 'Invalid token',
   SOMETHING_WENT_WRONG: 'Something went wrong',
   ACCESS_DENIED: 'Access denied',
   INSUFFICIENT_ROLE: 'Insufficient role',
-  MISSING_OR_MALFORMED_TOKEN: 'Missing or malformed token',
 };
