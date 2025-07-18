@@ -22,4 +22,15 @@ export class UserRepository {
       { $set: { refreshToken: refreshToken, lastLogin: Date.now() } },
     );
   }
+
+  async removeRefreshTokenById(id: string): Promise<UpdateWriteOpResult> {
+    return this.userModel.updateOne(
+      { _id: id },
+      { $unset: { refreshToken: null } },
+    );
+  }
+
+  async findByRefreshToken(refreshToken: string): Promise<User | null> {
+    return this.userModel.findOne({ refreshToken: refreshToken });
+  }
 }

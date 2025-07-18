@@ -5,10 +5,16 @@ import { UserModel } from '@modules/users/users.schema';
 import { isEmpty } from 'lodash';
 import { UnauthorizedError } from '@error/AppError';
 import { ErrorMessage } from '@error/ErrorCode';
-import { comparePassword, JwtExpiresIn, signToken } from '@utils/auth';
+import {
+  comparePassword,
+  JwtExpiresIn,
+  signToken,
+  verifyToken,
+} from '@utils/auth';
 import { UserPayload } from '@appTypes/user-payload';
 import { appConfig } from '@config';
 import { LoginRequestPayloadDto } from '@modules/auth/dto/login.dto';
+import { RefreshTokenResponsePayloadDto } from '@modules/auth/dto/refresh-token.dto';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +41,29 @@ export class AuthService {
     );
 
     return { accessToken, refreshToken };
+  }
+
+  async logout(userId: string) {
+    return this.userRepository.removeRefreshTokenById(userId);
+  }
+
+  async refreshToken(token: string): Promise<RefreshTokenResponsePayloadDto> {
+    const user = await this.userRepository.findByRefreshToken(token);
+
+    if (isEmpty(user)) {
+      throw new UnauthorizedError(ErrorMessage.INVALID_TOKEN);
+    }
+
+    try {
+      const userPayload = verifyToken(token);
+      const newAccessToken = signToken(
+        userPayload as UserPayload,
+        appConfig.auth.accessTokenExpire as JwtExpiresIn,
+      );
+      return { accessToken: newAccessToken } as RefreshTokenResponsePayloadDto;
+    } catch {
+      throw new UnauthorizedError(ErrorMessage.INVALID_TOKEN);
+    }
   }
 
   private async validateUser(
