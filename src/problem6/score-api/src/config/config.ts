@@ -3,6 +3,10 @@ import { z } from 'zod';
 
 const ConfigSchema = z.object({
   port: z.number(),
+  cors: z.object({
+    origins: z.array(z.string()),
+    credentials: z.boolean().optional(),
+  }),
   mongodb: z.object({
     uri: z.string(),
     databaseName: z.string(),
