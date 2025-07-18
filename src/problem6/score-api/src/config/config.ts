@@ -24,6 +24,9 @@ const ConfigSchema = z.object({
     accessTokenExpire: z.string(),
     refreshTokenExpire: z.string(),
   }),
+  logger: z.object({
+    sensitives: z.array(z.string()),
+  }),
 });
 
 type AppConfig = z.infer<typeof ConfigSchema>;

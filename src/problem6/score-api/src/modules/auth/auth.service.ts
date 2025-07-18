@@ -1,0 +1,81 @@
+import { Injectable } from '@nestjs/common';
+import { UserRepository } from '@modules/users/user.repository';
+import { LogService } from '@modules/log/log.service';
+import { UserModel } from '@modules/users/users.schema';
+import { isEmpty } from 'lodash';
+import { UnauthorizedError } from '@error/AppError';
+import { ErrorMessage } from '@error/ErrorCode';
+import { comparePassword, JwtExpiresIn, signToken } from '@utils/auth';
+import { UserPayload } from '@appTypes/user-payload';
+import { appConfig } from '@config';
+import { LoginRequestPayloadDto } from '@modules/auth/dto/login.dto';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly logService: LogService,
+  ) {}
+
+  async login(dto: LoginRequestPayloadDto) {
+    const { username, password } = dto;
+
+    // validate user from database
+    this.logService.info(`Login with username: ${username}`);
+    const user = await this.validateUser(username, password);
+
+    // generate accessToken & refreshToken
+    const [accessToken, refreshToken] = await this.generateToken(
+      user.id as string,
+      user.username,
+    );
+
+    this.logService.info(
+      `Login successful with username: ${accessToken}, email: ${refreshToken}`,
+    );
+
+    return { accessToken, refreshToken };
+  }
+
+  private async validateUser(
+    username: string,
+    password: string,
+  ): Promise<UserModel> {
+    const user = await this.userRepository.findByUsername(username);
+
+    if (isEmpty(user)) {
+      throw new UnauthorizedError(ErrorMessage.INVALID_CREDENTIALS);
+    }
+
+    const passwordsMatch = await comparePassword(password, user.password);
+
+    if (!passwordsMatch) {
+      throw new UnauthorizedError(ErrorMessage.INVALID_CREDENTIALS);
+    }
+
+    return user.toJSON() as UserModel;
+  }
+
+  private async generateToken(
+    id: string,
+    username: string,
+  ): Promise<[string, string]> {
+    const tokenPayload: UserPayload = {
+      id: id,
+      username: username,
+    };
+
+    const accessToken = signToken(
+      tokenPayload,
+      appConfig.auth.accessTokenExpire as JwtExpiresIn,
+    );
+    const refreshToken = signToken(
+      tokenPayload,
+      appConfig.auth.refreshTokenExpire as JwtExpiresIn,
+    );
+
+    await this.userRepository.updateRefreshToken(id, refreshToken);
+
+    return [accessToken, refreshToken];
+  }
+}

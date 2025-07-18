@@ -1,7 +1,7 @@
 import { Db } from 'mongodb';
 import { MigrationInterface } from 'mongo-migrate-ts';
 import { appConfig } from '@config';
-import { hashPassword } from '../utils/auth';
+import { hashPassword } from '@utils/auth';
 
 interface User {
   username: string;

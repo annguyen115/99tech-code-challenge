@@ -17,3 +17,11 @@ auth:
   secret: this-is-my-secret
   accessTokenExpire: 15m
   refreshTokenExpire: 7d
+
+logger:
+  sensitives:
+    - password
+    - accessToken
+    - refreshToken
+    - req.headers.authorization
+    - req.body.password

@@ -28,9 +28,21 @@
       "@appTypes/*": [
         "src/types/*"
       ],
-      "@utils": [
+      "@utils/*": [
         "src/utils/*"
-      ]
+      ],
+      "@error/*": [
+        "src/error/*"
+      ],
+      "@interceptors/*": [
+        "src/interceptors/*"
+      ],
+      "@guards/*": [
+        "src/guards/*"
+      ],
+      "@decorators/*": [
+        "src/decorators/*"
+      ],
     }
   }
 }
