@@ -22,4 +22,14 @@ export type ScoreModel = Score & BaseModel;
 
 export type ScoreDocument = Score & Document;
 
+export type TopScoreModel = {
+  id: string;
+  value: number;
+  user: {
+    id: string;
+    username: string;
+    fullName: string;
+  };
+};
+
 ScoreSchema.set('toJSON', toJSONTransform());
