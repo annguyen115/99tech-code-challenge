@@ -8,6 +8,7 @@ const ConfigSchema = z.object({
     databaseName: z.string(),
     collections: z.object({
       users: z.string(),
+      scores: z.string(),
       migrations: z.string(),
     }),
     migration: z.object({

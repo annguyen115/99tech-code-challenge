@@ -44,7 +44,7 @@ export class seed_users1752822653424 implements MigrationInterface {
   private async generateListUser(): Promise<User[]> {
     const users: User[] = [];
 
-    for (let i = 0; i < TOTAL_USERS - 1; i++) {
+    for (let i = 1; i <= TOTAL_USERS; i++) {
       users.push({
         ...user,
         username: `${user.username}${i}`,

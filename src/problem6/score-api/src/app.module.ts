@@ -5,6 +5,7 @@ import { UsersModule } from '@modules/users/users.module';
 import { UsersService } from '@modules/users/users.service';
 import { appConfig } from '@config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ScoresModule } from '@modules/scores/scores.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       `${appConfig.mongodb.uri}/${appConfig.mongodb.databaseName}`,
     ),
     UsersModule,
+    ScoresModule,
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],
