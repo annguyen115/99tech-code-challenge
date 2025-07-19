@@ -2,18 +2,19 @@ import { FC, JSX, useEffect, useState } from 'react';
 import { Score } from '@appTypes/score';
 import { useAuth } from '@auth/AuthContext';
 import api from '@api/axios';
+import { API_PATH } from '@constants/api';
 
 export const Dashboard: FC = (): JSX.Element => {
   const { user, logout } = useAuth();
   const [topScores, setTopScores] = useState<Score[]>([]);
   
   const fetchScores = async () => {
-    const { data } = await api.get('/scores/top');
+    const { data } = await api.get(API_PATH.SCORES.LEADERBOARD);
     setTopScores(data);
   };
   
   const updateScore = async () => {
-    await api.post('/scores/update');
+    await api.post(API_PATH.SCORES.UPDATE_SCORE);
     void fetchScores();
   };
   

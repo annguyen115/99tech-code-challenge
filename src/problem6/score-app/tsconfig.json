@@ -7,6 +7,7 @@
       "@auth/*": ["auth/*"],
       "@config/*": ["config/*"],
       "@page/*": ["page/*"],
+      "@constants/*": ["constants/*"],
       "@appTypes/*": ["types/*"],
     },
     "target": "es5",

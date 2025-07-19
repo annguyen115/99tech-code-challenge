@@ -1,20 +1,22 @@
-import { FC, JSX, useState } from 'react';
+import { FC, FormEvent, JSX, useState } from 'react';
 import { useAuth } from '@auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import api from '@api/axios';
 
 export const Login: FC = (): JSX.Element => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { data } = await api.post('/auth/login', { username, password });
-    login(data);
-    navigate('/dashboard');
+    void login({ username, password });
   };
+  
+  // user already login
+  if (user) {
+    navigate(-1);
+  }
   
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

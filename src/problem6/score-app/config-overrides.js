@@ -9,6 +9,7 @@ module.exports = override(
 		['@auth']: path.resolve(__dirname, 'src/auth'),
 		['@config']: path.resolve(__dirname, 'src/config'),
 		['@page']: path.resolve(__dirname, 'src/page'),
+		['@constants']: path.resolve(__dirname, 'src/constants'),
 		['@appTypes']: path.resolve(__dirname, 'src/types'),
 	})
 );
