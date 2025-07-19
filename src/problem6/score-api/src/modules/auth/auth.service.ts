@@ -35,6 +35,7 @@ export class AuthService {
     const [accessToken, refreshToken] = await this.generateToken(
       user.id as string,
       user.username,
+      user.fullName,
     );
 
     this.logService.info(
@@ -89,10 +90,12 @@ export class AuthService {
   private async generateToken(
     id: string,
     username: string,
+    fullName: string,
   ): Promise<[string, string]> {
     const tokenPayload: UserPayload = {
       id: id,
       username: username,
+      fullName: fullName,
     };
 
     const accessToken = signToken(
