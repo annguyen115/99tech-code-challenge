@@ -4,7 +4,10 @@ import { leaderboard as getLeaderBoard, personalRank as getPersonalRank, updateS
 import { LeaderboardDto, RankDto } from '@api/dtos/score.dto';
 import { debounce, isEmpty, toFinite } from 'lodash';
 import toast from 'react-hot-toast';
+import { io, Socket } from 'socket.io-client';
+import { appConfig } from '@config/config';
 
+const socket: Socket = io(appConfig.REACT_APP_SOCKET_SERVER_SCORE_URL);
 export const Dashboard: FC = (): JSX.Element => {
   const { user, logout } = useAuth();
   
@@ -13,6 +16,8 @@ export const Dashboard: FC = (): JSX.Element => {
   const [limit, setLimit] = useState<number>(10);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
+  
   
   const fetchLeaderboard = async () => {
     const { data } = await getLeaderBoard(limit);
@@ -27,7 +32,7 @@ export const Dashboard: FC = (): JSX.Element => {
   const updateScore = async (newScore: number) => {
     const { data } = await updatePersonalScore(newScore);
     toast.success(data.message);
-    void initData();
+    // void initData();
   };
   
   const rankWithSuffix = (_rank: number): string => {
@@ -79,6 +84,28 @@ export const Dashboard: FC = (): JSX.Element => {
     };
   }, [debouncedInitData]);
   
+  useEffect(() => {
+    socket.on('connect', () => {
+      setIsSocketConnected(true);
+      console.log('[✅ Socket connected]', socket.id);
+    });
+    
+    socket.on('connect_error', (err) => {
+      setIsSocketConnected(false);
+      console.error('[❌ Socket connect error]', err.message);
+    });
+    
+    socket.on('score-updated', () => {
+      console.log('score-updated received!');
+      void initData();
+    });
+    
+    return () => {
+      socket.off('connect');
+      socket.off('connect_error');
+      socket.off('score-updated');
+    };
+  }, [limit]);
   
   if (loading) {
     return (
@@ -130,7 +157,13 @@ export const Dashboard: FC = (): JSX.Element => {
       </div>
       
       <div className="bg-white shadow p-4 rounded">
-        <h2 className='text-lg font-bold mb-2'>Leaderboard top {limit}</h2>
+        <div className='flex justify-between items-center mb-2'>
+          <h2 className='text-lg font-bold'>Leaderboard top {limit}</h2>
+          <p className="text-xs text-gray-500">
+            Socket: {isSocketConnected ? '🟢 Connected' : '🔴 Disconnected'}
+          </p>
+        </div>
+
         <ul>
           {topScores.map((item, index) => {
             const isYourRank = item.userId === user?.id;

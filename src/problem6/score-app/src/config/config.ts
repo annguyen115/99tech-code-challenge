@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 const EnvSchema = z.object({
   REACT_APP_API_URL: z.string(),
+  REACT_APP_SOCKET_SERVER_SCORE_URL: z.string(),
   REACT_APP_ACCESS_TOKEN_KEY: z.string().min(1),
   REACT_APP_REFRESH_TOKEN_KEY: z.string().min(1),
 });
