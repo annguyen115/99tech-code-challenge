@@ -3,6 +3,7 @@ import { useAuth } from '@auth/AuthContext';
 import { leaderboard as getLeaderBoard, personalRank as getPersonalRank, updateScore as updatePersonalScore } from '@api/score';
 import { LeaderboardDto, RankDto } from '@api/dtos/score.dto';
 import { debounce, isEmpty, toFinite } from 'lodash';
+import toast from 'react-hot-toast';
 
 export const Dashboard: FC = (): JSX.Element => {
   const { user, logout } = useAuth();
@@ -24,7 +25,9 @@ export const Dashboard: FC = (): JSX.Element => {
   };
   
   const updateScore = async (newScore: number) => {
-    void updatePersonalScore(newScore);
+    const { data } = await updatePersonalScore(newScore);
+    console.log({data});
+    toast.success(data.message);
     void initData();
   };
   
