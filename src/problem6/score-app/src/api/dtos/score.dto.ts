@@ -9,6 +9,7 @@ export type RankDto = {
   userId: string;
   username: string;
   rank: number;
+  score: number;
 };
 
 export type LeaderboardDto = ScoreDto[];

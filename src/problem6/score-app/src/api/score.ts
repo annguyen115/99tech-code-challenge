@@ -10,3 +10,7 @@ export const leaderboard = (limit?: number): Promise<AxiosResponse<LeaderboardDt
 export const personalRank = (): Promise<AxiosResponse<RankDto>> => {
   return api.get<RankDto>(API_PATH.SCORES.RANK);
 };
+
+export const updateScore = (newScore: number): Promise<AxiosResponse<void>> => {
+  return api.put(API_PATH.SCORES.UPDATE_SCORE, { score: newScore });
+};
