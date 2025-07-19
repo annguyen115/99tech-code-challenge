@@ -26,7 +26,6 @@ export const Dashboard: FC = (): JSX.Element => {
   
   const updateScore = async (newScore: number) => {
     const { data } = await updatePersonalScore(newScore);
-    console.log({data});
     toast.success(data.message);
     void initData();
   };
@@ -121,7 +120,7 @@ export const Dashboard: FC = (): JSX.Element => {
           
           <div>
             <button
-              className='bg-green-600 text-white px-4 py-2 rounded mb-4'
+              className='bg-green-600 text-white px-4 py-2 rounded mb-4 h-10'
               onClick={() => setIsModalOpen(true)}
             >
               Update score
