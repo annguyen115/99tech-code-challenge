@@ -3,13 +3,18 @@ import { ScoresRepository } from '@modules/scores/scores.repository';
 import { GetLeaderBoardRespondPayload } from '@modules/scores/dtos/get-leader-board';
 import { map } from 'lodash/fp';
 import { GetUserRankResponsePayload } from '@modules/scores/dtos/get-user-rank';
+import { ScoresGateway } from '@modules/scores/scores.gateway';
 
 @Injectable()
 export class ScoresService {
-  constructor(private readonly scoresRepository: ScoresRepository) {}
+  constructor(
+    private readonly scoresRepository: ScoresRepository,
+    private readonly scoresGateway: ScoresGateway,
+  ) {}
 
-  updateScore(userId: string, score: number) {
-    return this.scoresRepository.updateScoreByUserId(userId, score);
+  async updateScore(userId: string, score: number) {
+    await this.scoresRepository.updateScoreByUserId(userId, score);
+    this.scoresGateway.emitScoreUpdate();
   }
 
   async getLeaderboard(top: number): Promise<GetLeaderBoardRespondPayload[]> {
