@@ -49,4 +49,5 @@ export const ErrorMessage = {
   SOMETHING_WENT_WRONG: 'Something went wrong',
   ACCESS_DENIED: 'Access denied',
   INSUFFICIENT_ROLE: 'Insufficient role',
+  INVALID_USERNAME_OR_PASSWORD: 'Invalid username or password',
 };

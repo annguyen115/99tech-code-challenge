@@ -3,7 +3,7 @@ import { UserRepository } from '@modules/users/user.repository';
 import { LogService } from '@modules/log/log.service';
 import { UserModel } from '@modules/users/users.schema';
 import { isEmpty } from 'lodash';
-import { TokenInvalidError } from '@error/AppError';
+import { TokenInvalidError, UnauthorizedError } from '@error/AppError';
 import { ErrorMessage } from '@error/ErrorCode';
 import {
   comparePassword,
@@ -75,13 +75,13 @@ export class AuthService {
     const user = await this.userRepository.findByUsername(username);
 
     if (isEmpty(user)) {
-      throw new TokenInvalidError(ErrorMessage.TOKEN_INVALID);
+      throw new UnauthorizedError(ErrorMessage.INVALID_USERNAME_OR_PASSWORD);
     }
 
     const passwordsMatch = await comparePassword(password, user.password);
 
     if (!passwordsMatch) {
-      throw new TokenInvalidError(ErrorMessage.TOKEN_INVALID);
+      throw new UnauthorizedError(ErrorMessage.INVALID_USERNAME_OR_PASSWORD);
     }
 
     return user.toJSON() as UserModel;
