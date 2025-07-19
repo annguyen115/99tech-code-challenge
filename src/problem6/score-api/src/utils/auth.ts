@@ -21,5 +21,8 @@ export const comparePassword = async (
 export const verifyToken = (token: string) =>
   jwt.verify(token, appConfig.auth.secret);
 
-export const signToken = (payload: UserPayload, expiresIn: JwtExpiresIn) =>
-  jwt.sign(payload, appConfig.auth.secret, { expiresIn });
+export const signToken = (payload: UserPayload, expiresIn: JwtExpiresIn) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { exp, iat, ...rest } = payload;
+  return jwt.sign(rest, appConfig.auth.secret, { expiresIn });
+};
