@@ -11,5 +11,6 @@ module.exports = override(
 		['@page']: path.resolve(__dirname, 'src/page'),
 		['@constants']: path.resolve(__dirname, 'src/constants'),
 		['@appTypes']: path.resolve(__dirname, 'src/types'),
+		['@hooks']: path.resolve(__dirname, 'src/hooks'),
 	})
 );

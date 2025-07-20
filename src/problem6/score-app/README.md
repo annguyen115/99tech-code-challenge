@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# 🧑‍💻 Frontend – Real-time Scoreboard App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend part of the scoreboard system, providing a real-time user interface for viewing and updating scores.
 
-## Available Scripts
+## 📦 Tech Stack
 
-In the project directory, you can run:
+- React
+- TypeScript
+- Axios (with interceptors for JWT)
+- WebSocket (native or via Socket.IO)
+- TailwindCSS
 
-### `npm start`
+## 🧩 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Display top 10 users by score.
+- Login and persist JWT in localStorage.
+- Real-time updates via WebSocket.
+- Button to trigger an action that increases score.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🔧 Setup Instructions
 
-### `npm test`
+1. Install dependencies:
+```bash
+pnpm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Set up `.env`:
+```
+REACT_APP_API_URL=http://localhost:4000
+REACT_APP_ACCESS_TOKEN_KEY=accessToken
+REACT_APP_REFRESH_TOKEN_KEY=refreshToken
+REACT_APP_SOCKET_SERVER_SCORE_URL=http://localhost:4000/score
+```
 
-### `npm run build`
+3. Run the app:
+```bash
+pnpm run start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Pages & Components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `Login`: Authenticate and store token.
+- `Dashboard`: Displays top 10 scores.
+- `UpdateScoreModal`: Triggers score update and show modak.
+- `useScoreSocket`: WebSocket hook for live updates.
+- `axios`: Handles token injection.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📡 Real-time Updates
 
-### `npm run eject`
+Frontend connects to the WebSocket server. On receiving `score_update` events, it updates the UI without refreshing.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🔐 Auth Flow
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- JWT stored in `localStorage`
+- Axios adds JWT to `Authorization` header
+- Protected routes redirect to login if a token is missing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📈 Suggested Improvements
+- [ ] Add unit test and coverage 100%.
+- [ ] Add form validation
+- [ ] Add sound or visual notification on score update.
+- [ ] Show a user’s rank in real-time.
+- [ ] Display update timestamps.
