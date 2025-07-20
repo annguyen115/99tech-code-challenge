@@ -28,7 +28,10 @@ export class AuthService {
     const { username, password } = dto;
 
     // validate user from database
-    this.logService.info(`Login with username: ${username}`);
+    this.logService.log(
+      `Login with username: ${username}`,
+      'AuthService -> login',
+    );
     const user = await this.validateUser(username, password);
 
     // generate accessToken & refreshToken
@@ -38,8 +41,9 @@ export class AuthService {
       user.fullName,
     );
 
-    this.logService.info(
+    this.logService.log(
       `Login successful with username: ${accessToken}, email: ${refreshToken}`,
+      'AuthService -> login',
     );
 
     return { accessToken, refreshToken };

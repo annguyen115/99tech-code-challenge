@@ -20,7 +20,7 @@ export class ScoresGateway implements OnGatewayInit {
   constructor(private readonly logService: LogService) {}
 
   afterInit() {
-    this.logService.info('WebSocket /score initialized');
+    this.logService.log('WebSocket /score initialized', 'ScoresGateway');
   }
 
   emitScoreUpdate() {

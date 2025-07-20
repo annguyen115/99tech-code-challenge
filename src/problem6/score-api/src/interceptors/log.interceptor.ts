@@ -24,7 +24,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
     const censoredBody = this.censor(body);
 
-    this.logService.info('[Request]', {
+    this.logService.log('[Request]', 'LoggingInterceptor', {
       method,
       url: originalUrl,
       body: censoredBody,
@@ -35,7 +35,7 @@ export class LoggingInterceptor implements NestInterceptor {
         const duration = Date.now() - start;
         const censoredRes = this.censor(response as Record<string, unknown>);
 
-        this.logService.info('[Response]', {
+        this.logService.log('[Response]', 'LoggingInterceptor', {
           method,
           url: originalUrl,
           duration: `${duration}ms`,
