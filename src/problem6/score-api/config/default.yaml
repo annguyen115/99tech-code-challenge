@@ -1,0 +1,34 @@
+port: 4000
+
+cors:
+  origins:
+    - http://localhost:3000
+    - https://staging.example.com
+    - https://app.example.com
+  credentials: false
+
+mongodb:
+  uri: mongodb://localhost:27017
+  databaseName: api-score
+  collections:
+    users: users
+    scores: scores
+    migrations: migrations_changelog
+  migration:
+    path: src/migrations
+    user:
+      amount: 20
+
+auth:
+  salt: 10
+  secret: this-is-my-secret
+  accessTokenExpire: 15m
+  refreshTokenExpire: 7d
+
+logger:
+  sensitives:
+    - password
+    - accessToken
+    - refreshToken
+    - req.headers.authorization
+    - req.body.password
